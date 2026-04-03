@@ -21,6 +21,7 @@ import urllib.request
 
 SENDGRID_ENDPOINT = "https://api.sendgrid.com/v3/mail/send"
 REQUEST_TIMEOUT_SECONDS = 30
+DEFAULT_FROM_EMAIL = "EddyAssistant@neborg.com"
 
 
 def parse_args() -> argparse.Namespace:
@@ -42,8 +43,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--from-email",
-        default=os.getenv("SENDGRID_FROM_EMAIL"),
-        help="Sender email. Defaults to SENDGRID_FROM_EMAIL.",
+        default=os.getenv("SENDGRID_FROM_EMAIL", DEFAULT_FROM_EMAIL),
+        help=(
+            "Sender email. Defaults to SENDGRID_FROM_EMAIL, "
+            f"or {DEFAULT_FROM_EMAIL} if unset."
+        ),
     )
     parser.add_argument(
         "--from-name",
